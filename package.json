@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "prebuild": "node -p \"'export const FRONT_PART_VERSION = ' + JSON.stringify(require('./package.json').version)\" > ./version.ts",
+    "dev": "npm run prebuild && next dev",
+    "build": "npm run prebuild && next build",
     "start": "next start",
     "lint": "next lint",
     "prettier-all": "prettier --write 'pages/.'"

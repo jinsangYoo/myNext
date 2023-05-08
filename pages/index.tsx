@@ -1,8 +1,7 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import { Box, Grid, Text, GridItem } from '@chakra-ui/react'
 import Head from 'next/head'
-
-const inter = Inter({ subsets: ['latin'] })
+import { menus } from '../data/menus'
+import SubPageCard from '../components/SubPageCard'
 
 import React, { useEffect } from 'react'
 import {
@@ -42,13 +41,22 @@ export default function Home() {
   }, [])
 
   return (
-    <>
+    <Box>
       <Head>
-        <title>Welcome to my Next.js website</title>
+        <title>Welcome to myNext website</title>
       </Head>
-      <div>
-        <p>난 넥스트얌!!</p>
-      </div>
-    </>
+      <Box>
+        <Text fontSize="xxx-large" fontWeight="extrabold" textAlign="center" marginTop="9">
+          API별 메뉴
+        </Text>
+        <Grid gridTemplateColumns={['1fr', 'repeat(2, 1fr)', 'repeat(3, 1fr)']} gridGap="10" padding="10">
+          {menus.menus.map((menu) => (
+            <GridItem key={menu.id}>
+              <SubPageCard {...menu} />
+            </GridItem>
+          ))}
+        </Grid>
+      </Box>
+    </Box>
   )
 }
