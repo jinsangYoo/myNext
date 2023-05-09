@@ -8,6 +8,6 @@ export default [
       'Aenean lectus. Pellentesque eget nunc... Aenean lectus. Pellentesque eget nunc... Aenean lectus. Pellentesque eget nunc... Aenean lectus. Pellentesque eget nunc... Aenean lectus. Pellentesque eget nunc... Aenean lectus. Pellentesque eget nunc... Aenean lectus. Pellentesque eget nunc... Aenean lectus. Pellentesque eget nunc... Aenean lectus. Pellentesque eget nunc... Aenean lectus. Pellentesque eget nunc... Aenean lectus. Pellentesque eget nunc... Aenean lectus. Pellentesque eget nunc... Aenean lectus. Pellentesque eget nunc... Aenean lectus. Pellentesque eget nunc... Aenean lectus. Pellentesque eget nunc... Aenean lectus. Pellentesque eget nunc... ',
     job_title: 'Marketing Assistant',
     avatar: 'https://robohash.org/elegrice5.jpg?size=350x350',
-    cover_image: 'https://picsum.photos/seed/elegrice5/1920/1080',
-  },
+    cover_image: 'https://picsum.photos/seed/elegrice5/1920/1080'
+  }
 ]

@@ -5,7 +5,7 @@ import {
   Avatar,
   Center,
   VStack,
-  useColorModeValue,
+  useColorModeValue
 } from '@chakra-ui/react'
 
 function UserCard(props) {
@@ -13,21 +13,21 @@ function UserCard(props) {
     <Link href={`/users/${props.username}`} passHref>
       <>
         <VStack
-          spacing='4'
-          borderRadius='md'
-          boxShadow='xl'
-          padding='5'
+          spacing="4"
+          borderRadius="md"
+          boxShadow="xl"
+          padding="5"
           backgroundColor={useColorModeValue('gray.50', 'gray.700')}
         >
           <Center>
-            <Avatar size='lg' src={props.avatar} />
+            <Avatar size="lg" src={props.avatar} />
           </Center>
           <Center>
-            <Box textAlign='center'>
-              <Text fontWeight='bold' fontSize='xl'>
+            <Box textAlign="center">
+              <Text fontWeight="bold" fontSize="xl">
                 {props.first_name} {props.last_name}
               </Text>
-              <Text fontSize='xs'> {props.job_title}</Text>
+              <Text fontSize="xs"> {props.job_title}</Text>
             </Box>
           </Center>
         </VStack>

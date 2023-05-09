@@ -1,7 +1,15 @@
 import Link from 'next/link'
-import { Box, Text, Avatar, Center, VStack, useColorModeValue } from '@chakra-ui/react'
+import {
+  Box,
+  Text,
+  Avatar,
+  Center,
+  VStack,
+  useColorModeValue
+} from '@chakra-ui/react'
+import * as U from '../../utils'
 
-function SubPageCard(props) {
+function MenuCard(props) {
   return (
     <Link href={`/users/${props.username}`} passHref>
       <>
@@ -13,14 +21,16 @@ function SubPageCard(props) {
           backgroundColor={useColorModeValue('gray.50', 'gray.700')}
         >
           <Center>
-            <Avatar size="lg" src={props.avatar} />
+            <Avatar size="lg" src={U.randomAvatarUrl(props.name)} />
           </Center>
           <Center>
             <Box textAlign="center">
               <Text fontWeight="bold" fontSize="xl">
-                {props.first_name} {props.last_name}
+                {props.name}
               </Text>
-              <Text fontSize="xs"> {props.job_title}</Text>
+              {props.description && (
+                <Text fontSize="xs"> {props.description}</Text>
+              )}
             </Box>
           </Center>
         </VStack>
@@ -29,4 +39,4 @@ function SubPageCard(props) {
   )
 }
 
-export default SubPageCard
+export default MenuCard

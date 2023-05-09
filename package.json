@@ -8,14 +8,14 @@
     "build": "npm run prebuild && next build",
     "start": "next start",
     "lint": "next lint",
-    "prettier-all": "prettier --write 'pages/.'"
+    "prettier-all": "prettier --write '.'"
   },
   "dependencies": {
-    "@jinsang/slimer-react": "^1.0.48",
     "@chakra-ui/icons": "^2.0.19",
     "@chakra-ui/react": "^2.6.0",
     "@emotion/react": "^11.10.8",
     "@emotion/styled": "^11.10.8",
+    "@jinsang/slimer-react": "^1.0.48",
     "@types/node": "18.16.3",
     "@types/react": "18.2.4",
     "@types/react-dom": "18.2.3",
@@ -31,6 +31,7 @@
     "typescript": "5.0.4"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.7.1"

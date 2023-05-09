@@ -8,6 +8,7 @@ export type menuItemProps = {
   id: string
   name: string
   path: string
+  description?: string
   subMenu: subMenuItemProps[]
 }
 
@@ -20,58 +21,101 @@ export const menus: menusProps = {
   version: '0.2',
   menus: [
     {
-      id: 'personal',
-      name: 'A 대문',
-      path: 'personal',
-      subMenu: [
-        { id: 'main', name: 'A 메인', path: 'main' },
-        { id: 'community', name: 'A 게시판', path: 'community' },
-        { id: 'about', name: 'A 여긴 어디', path: 'about' }
-      ]
+      id: 'add_in_cart',
+      name: 'AddInCart',
+      path: 'add_in_cart',
+      subMenu: []
     },
     {
-      id: 'myReact',
-      name: 'A myReact',
-      path: 'myReact',
-      subMenu: [
-        { id: 'main', name: 'A 메인', path: 'main' },
-        { id: 'openSourceLicense', name: 'A 라이센스', path: 'openSourceLicense' }
-      ]
+      id: 'appear_product',
+      name: 'AppearProduct',
+      path: 'appear_product',
+      subMenu: []
     },
     {
-      id: 'mall',
-      name: 'A 커머스(가상)',
-      path: 'mall',
+      id: 'buy_done',
+      name: 'BuyDone',
+      path: 'buy_done',
+      subMenu: []
+    },
+    {
+      id: 'buy_cancel',
+      name: 'BuyCancel',
+      path: 'buy_cancel',
+      subMenu: []
+    },
+    {
+      id: 'delete_in_cart',
+      name: 'DeleteInCart',
+      path: 'delete_in_cart',
+      subMenu: []
+    },
+    {
+      id: 'join',
+      name: 'Join',
+      path: 'join',
+      subMenu: []
+    },
+    {
+      id: 'leave',
+      name: 'Leave',
+      path: 'leave',
+      subMenu: []
+    },
+    {
+      id: 'link',
+      name: 'Link',
+      path: 'link',
+      subMenu: []
+    },
+    {
+      id: 'login_for_api',
+      name: 'LoginForAPI',
+      path: 'login_for_api',
+      subMenu: []
+    },
+    {
+      id: 'pl',
+      name: 'PL',
+      path: 'pl',
+      subMenu: []
+    },
+    {
+      id: 'referrer',
+      name: 'Referrer',
+      path: 'referrer',
+      description: 'debug 용도',
+      subMenu: []
+    },
+    {
+      id: 'search',
+      name: 'Search',
+      path: 'search',
+      subMenu: []
+    },
+    {
+      id: 'tel',
+      name: 'Tel',
+      path: 'tel',
+      subMenu: []
+    },
+    {
+      id: 'webview',
+      name: 'Webview',
+      path: 'webview',
+      description: 'debug 용도',
+      subMenu: []
+    },
+    {
+      id: 'legacy',
+      name: 'Legacy',
+      path: 'legacy',
+      description: 'debug 용도',
       subMenu: [
         { id: 'main', name: 'A 메인', path: 'main' },
         { id: 'cart', name: 'A 장바구니', path: 'cart' },
         { id: 'order', name: 'A 주문 목록', path: 'orderList' },
         { id: 'etc', name: 'A 기타', path: 'etc' }
-      ]
-    },
-    {
-      id: 'member',
-      name: 'A 로그인/가입/탈퇴',
-      path: 'member',
-      subMenu: [
-        { id: 'main', name: 'A 로그인', path: 'main' },
-        { id: 'join', name: 'A 가입', path: 'join' },
-        { id: 'leave', name: 'A 탈퇴', path: 'leave' }
-      ]
-    },
-    {
-      id: 'search',
-      name: 'A 검색',
-      path: 'search',
-      subMenu: [{ id: 'main', name: 'A 검색', path: 'main' }]
-    },
-    {
-      id: 'etc',
-      name: 'A 기타',
-      path: 'etc',
-      subMenu: [
-        { id: 'main', name: 'A PL', path: 'main' },
-        { id: 'push', name: 'A Push', path: 'push' }
       ]
     }
   ]

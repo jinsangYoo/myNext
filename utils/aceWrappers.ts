@@ -7,7 +7,7 @@ import {
   ACEResponseToCaller,
   ACProduct,
   ACEGender,
-  ACEMaritalStatus,
+  ACEMaritalStatus
 } from '@jinsang/slimer-react'
 // import type { ProductForType } from '../hooks'
 
@@ -55,13 +55,16 @@ export function sendCommonWithCB(argMessage: string, params: ACParams): void {
   })
 }
 
-export function sendCommonWithPromise(argMessage: string, params: ACParams): void {
+export function sendCommonWithPromise(
+  argMessage: string,
+  params: ACParams
+): void {
   const msg = `\n\n\n\n Promise ${argMessage} 클릭!`
   console.log(msg)
   console.log(JSON.stringify(params, null, 2))
 
   ACS.send(params)
-    .then(response => {
+    .then((response) => {
       console.log(`${argMessage}::in then!!`)
       if (response) {
         console.log('response: ' + JSON.stringify(response, null, 2))
@@ -69,7 +72,7 @@ export function sendCommonWithPromise(argMessage: string, params: ACParams): voi
         console.log('response is undefined.')
       }
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(`${argMessage}::in reject!!`)
       if (err) {
         console.log('err: ' + JSON.stringify(err, null, 2))
