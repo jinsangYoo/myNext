@@ -26,8 +26,9 @@ const title = 'AddInCart'
 const AddInCart: FC = () => {
   const [randomValueForScreen, setRandomValueForScreen] = useState(0)
   useEffect(() => {
-    setRandomValueForScreen(getRandomIntInclusive(0, 999))
-    const msgForScreen = `>>${title}<< >>${randomValueForScreen}<<`
+    const ranValue = getRandomIntInclusive(0, 999)
+    setRandomValueForScreen(ranValue)
+    const msgForScreen = `>>${title}<< >>${ranValue}<<`
     const params = ACParams.init(ACParams.TYPE.EVENT, msgForScreen)
     sendCommonWithPromise(msgForScreen, params)
   }, [])
