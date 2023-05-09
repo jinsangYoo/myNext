@@ -5,13 +5,14 @@ import {
   Avatar,
   Center,
   VStack,
-  useColorModeValue
+  useColorModeValue,
+  Badge
 } from '@chakra-ui/react'
 import * as U from '../../utils'
 
 function MenuCard(props) {
   return (
-    <Link href={`/users/${props.username}`} passHref>
+    <Link href={`/menus/${props.path}`} passHref>
       <>
         <VStack
           spacing="4"
@@ -28,8 +29,9 @@ function MenuCard(props) {
               <Text fontWeight="bold" fontSize="xl">
                 {props.name}
               </Text>
+              {props.isDebug && <Badge colorScheme="teal">only debug</Badge>}
               {props.description && (
-                <Text fontSize="xs"> {props.description}</Text>
+                <Text fontSize="xs">{props.description}</Text>
               )}
             </Box>
           </Center>

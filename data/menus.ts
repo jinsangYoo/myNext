@@ -8,6 +8,7 @@ export type menuItemProps = {
   id: string
   name: string
   path: string
+  isDebug?: boolean
   description?: string
   subMenu: subMenuItemProps[]
 }
@@ -81,13 +82,6 @@ export const menus: menusProps = {
       subMenu: []
     },
     {
-      id: 'referrer',
-      name: 'Referrer',
-      path: 'referrer',
-      description: 'debug 용도',
-      subMenu: []
-    },
-    {
       id: 'search',
       name: 'Search',
       path: 'search',
@@ -100,9 +94,18 @@ export const menus: menusProps = {
       subMenu: []
     },
     {
+      id: 'referrer',
+      name: 'Referrer',
+      path: 'referrer',
+      isDebug: true,
+      description: 'debug 용도',
+      subMenu: []
+    },
+    {
       id: 'webview',
       name: 'Webview',
       path: 'webview',
+      isDebug: true,
       description: 'debug 용도',
       subMenu: []
     },
@@ -110,6 +113,7 @@ export const menus: menusProps = {
       id: 'legacy',
       name: 'Legacy',
       path: 'legacy',
+      isDebug: true,
       description: 'debug 용도',
       subMenu: [
         { id: 'main', name: 'A 메인', path: 'main' },
