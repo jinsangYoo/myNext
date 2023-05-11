@@ -11,7 +11,7 @@ import { Grid, GridItem } from '@chakra-ui/react'
 import { Stack, StackDivider } from '@chakra-ui/react'
 import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
 import { ButtonGroup, Button } from '@chakra-ui/react'
-import { AddIcon } from '@chakra-ui/icons'
+import { AddIcon, DeleteIcon } from '@chakra-ui/icons'
 import { Editable, EditablePreview, EditableInput } from '@chakra-ui/react'
 import Head from 'next/head'
 
@@ -61,6 +61,9 @@ const AddInCart: FC = () => {
     },
     []
   )
+  const allClearProducts = useCallback(() => {
+    setProducts([])
+  }, [])
   const toast = useToast()
   const onSend = useCallback(() => {
     const params = ACParams.init(ACParams.TYPE.ADDCART)
@@ -103,7 +106,7 @@ const AddInCart: FC = () => {
 
         <Card>
           <CardHeader>
-            <Heading size="md">Client Report</Heading>
+            <Heading size="md">제품외 정보</Heading>
           </CardHeader>
 
           <CardBody>
@@ -137,13 +140,14 @@ const AddInCart: FC = () => {
                 Add
               </Button>
               <Button
-                variant="solid"
+                variant="ghost"
                 colorScheme="blue"
-                onClick={() => console.log(`memberKey: ${memberKey}`)}
+                leftIcon={<DeleteIcon />}
+                onClick={allClearProducts}
               >
-                Buy now
+                All clear
               </Button>
-              <Button variant="ghost" colorScheme="blue" onClick={onSend}>
+              <Button variant="solid" colorScheme="blue" onClick={onSend}>
                 Add to cart
               </Button>
             </ButtonGroup>
