@@ -1,4 +1,5 @@
-import { Box, Grid, Text, GridItem } from '@chakra-ui/react'
+import { Box, Text } from '@chakra-ui/react'
+import { Grid, GridItem } from '@chakra-ui/react'
 import Head from 'next/head'
 import { menus } from '../data/menus'
 import MenuCard from '../components/MenuCard'

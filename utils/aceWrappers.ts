@@ -43,6 +43,10 @@ export function gcodeSelector(): string {
 //   return _products
 // }
 
+function popupMessage(msg: string, title: string | undefined = undefined) {
+  // TODO
+}
+
 export function sendCommonWithCB(argMessage: string, params: ACParams): void {
   const msg = `\n\n\n\n CB ${argMessage} 클릭!`
   console.log(msg)
@@ -57,7 +61,9 @@ export function sendCommonWithCB(argMessage: string, params: ACParams): void {
 
 export function sendCommonWithPromise(
   argMessage: string,
-  params: ACParams
+  params: ACParams,
+  isNeedPopUp: boolean = false,
+  title: string | undefined = undefined
 ): void {
   const msg = `\n\n\n\n Promise ${argMessage} 클릭!`
   console.log(msg)
@@ -68,8 +74,14 @@ export function sendCommonWithPromise(
       console.log(`${argMessage}::in then!!`)
       if (response) {
         console.log('response: ' + JSON.stringify(response, null, 2))
+        if (isNeedPopUp) popupMessage(`success sdk send ${params.name}`, title)
       } else {
         console.log('response is undefined.')
+        if (isNeedPopUp)
+          popupMessage(
+            `success sdk send ${params.name} but response is undefined`,
+            title
+          )
       }
     })
     .catch((err) => {
