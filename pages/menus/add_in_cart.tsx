@@ -125,12 +125,11 @@ const AddInCart: FC = () => {
               </Box>
             </Stack>
           </CardBody>
-          <CardFooter>
+          <CardFooter justify="space-between">
+            <Center>
+              <Text fontWeight="bold">제품 수량: {products.length} 개</Text>
+            </Center>
             <ButtonGroup spacing="2">
-              <Center>
-                <Text fontWeight="bold">제품 수량: {products.length} 개</Text>
-              </Center>
-
               <Button
                 variant="outline"
                 colorScheme="blue"
