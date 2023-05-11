@@ -22,7 +22,21 @@ function ProductCard(props) {
           divider={<StackDivider borderColor="gray.200" />}
         >
           <Tooltip label="제품명" aria-label="A tooltip">
-            <Editable defaultValue={props.name} fontWeight="bold">
+            <Editable
+              defaultValue={props.name}
+              fontWeight="bold"
+              onChange={(nextValue) => {
+                props.onUpdate({
+                  id: props.id,
+                  name: nextValue,
+                  category: props.category,
+                  price: props.price,
+                  quantity: props.quantity,
+                  productId: props.productId,
+                  optionCodeName: props.optionCodeName
+                })
+              }}
+            >
               <EditablePreview />
               <EditableInput />
             </Editable>
