@@ -132,7 +132,7 @@ const BuyDone: FC = () => {
       duration: 3000,
       isClosable: true
     })
-  }, [products, memberKey, orderNum, payMethod])
+  }, [url, products, memberKey, orderNum, payMethod])
 
   return (
     <>

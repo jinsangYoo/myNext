@@ -73,7 +73,7 @@ const AppearProduct: FC = () => {
       duration: 3000,
       isClosable: true
     })
-  }, [memberKey, productName, productCategory, productPrice, productId])
+  }, [url, memberKey, productName, productCategory, productPrice, productId])
 
   return (
     <>
