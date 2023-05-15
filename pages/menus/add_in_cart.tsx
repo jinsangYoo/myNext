@@ -91,7 +91,18 @@ const AddInCart: FC = () => {
   }, [])
   const toast = useToast()
   const onSend = useCallback(() => {
-    const params = ACParams.init(ACParams.TYPE.ADDCART)
+    if (products.length < 1) {
+      toast({
+        title: '알림',
+        description: '제품을 추가해주세요',
+        status: 'error',
+        duration: 3000,
+        isClosable: true
+      })
+      return
+    }
+
+    const params = ACParams.init(ACParams.TYPE.ADDCART, url)
     params.memberKey = memberKey
     params.products = []
     products.map((item) => {
