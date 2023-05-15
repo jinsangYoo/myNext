@@ -37,23 +37,36 @@ import { createRandomProduct } from '@/data/createRandomProduct'
 const title = 'DeleteInCart'
 const DeleteInCart: FC = () => {
   const [randomValueForScreen, setRandomValueForScreen] = useState(0)
+  const [pageHeading, setPageHeading] = useState<string>(`>>${title}<< >>-<<`)
   useEffect(() => {
     const ranValue = getRandomIntInclusive(0, 999)
     setRandomValueForScreen(ranValue)
-    const msgForScreen = `>>${title}<< >>${ranValue}<<`
-    const params = ACParams.init(ACParams.TYPE.EVENT, msgForScreen)
-    sendCommonWithPromise(msgForScreen, params)
+    setPageHeading(`>>${title}<< >>${ranValue}<<`)
+    const params = ACParams.init(
+      ACParams.TYPE.EVENT,
+      `>>${title}<< >>${ranValue}<<`
+    )
+    sendCommonWithPromise(`>>${title}<< >>${ranValue}<<`, params)
   }, [])
-  const randomValue = getRandomIntInclusive(0, 999)
-  const [url, setUrl] = useState<string>(`>>${title}<< >>${randomValue}<<`)
-  const [memberKey, setMemberKey] = useState<string>(
-    `멤버ID >>${randomValue + 0}<<`
-  )
+
+  const [randomValue, setRandomValue] = useState(0)
+  useEffect(() => {
+    setRandomValue(getRandomIntInclusive(0, 999))
+  }, [])
+  const [url, setUrl] = useState<string>(`>>${title}<< >>-<<`)
+  const [memberKey, setMemberKey] = useState<string>(`멤버ID >>-<<`)
+  useEffect(() => {
+    setUrl(`>>${title}<< >>${randomValue}<<`)
+    setMemberKey(`멤버ID >>${randomValue}<<`)
+  }, [randomValue])
+
   // product
   const [products, setProducts] = useState<IProduct[]>([])
   const addProduct = useCallback(() => {
-    const randomValue = getRandomIntInclusive(0, 99)
-    setProducts((products) => [createRandomProduct(randomValue), ...products])
+    setProducts((products) => [
+      createRandomProduct(getRandomIntInclusive(0, 99)),
+      ...products
+    ])
   }, [])
   const deleteProduct = useCallback(
     (id: string) => () => {
@@ -113,7 +126,7 @@ const DeleteInCart: FC = () => {
         <Flex minWidth="max-content" alignItems="center" gap="2">
           <BackButton />
           <Spacer />
-          <Heading p={8}>{`${title} >>${randomValueForScreen}<<`}</Heading>
+          <Heading p={8}>{pageHeading}</Heading>
         </Flex>
 
         <Card>
@@ -128,7 +141,7 @@ const DeleteInCart: FC = () => {
                   멤버 ID:
                 </Heading>
                 <Editable
-                  defaultValue={memberKey}
+                  value={memberKey}
                   onChange={(newValue) => setMemberKey(newValue)}
                 >
                   <EditablePreview />
