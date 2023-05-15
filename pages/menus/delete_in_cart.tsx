@@ -61,6 +61,18 @@ const DeleteInCart: FC = () => {
     },
     []
   )
+  const updateProduct = useCallback((newProduct: IProduct) => {
+    setProducts((products) =>
+      products.map((p) => {
+        if (p.id === newProduct.id) {
+          return newProduct
+        } else {
+          return p
+        }
+      })
+    )
+  }, [])
+
   const allClearProducts = useCallback(() => {
     setProducts([])
   }, [])
@@ -160,7 +172,8 @@ const DeleteInCart: FC = () => {
           {products.map((product) => (
             <GridItem key={product.id}>
               <ProductCard
-                isDisableProductIdAndOptionCodeName={false}
+                isDisableProductIdAndOptionCodeName={true}
+                onUpdate={updateProduct}
                 onRemove={deleteProduct(product.id)}
                 {...product}
               />

@@ -172,7 +172,7 @@ const AddInCart: FC = () => {
           {products.map((product) => (
             <GridItem key={product.id}>
               <ProductCard
-                isDisableProductIdAndOptionCodeName={false}
+                isDisableProductIdAndOptionCodeName={true}
                 onUpdate={updateProduct}
                 onRemove={deleteProduct(product.id)}
                 {...product}

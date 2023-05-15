@@ -42,13 +42,41 @@ function ProductCard(props) {
             </Editable>
           </Tooltip>
           <Tooltip label="제품 카테고리" aria-label="A tooltip">
-            <Editable defaultValue={props.category} fontWeight="bold">
+            <Editable
+              defaultValue={props.category}
+              fontWeight="bold"
+              onChange={(nextValue) => {
+                props.onUpdate({
+                  id: props.id,
+                  name: props.name,
+                  category: nextValue,
+                  price: props.price,
+                  quantity: props.quantity,
+                  productId: props.productId,
+                  optionCodeName: props.optionCodeName
+                })
+              }}
+            >
               <EditablePreview />
               <EditableInput />
             </Editable>
           </Tooltip>
           <Tooltip label="제품 가격" aria-label="A tooltip">
-            <Editable defaultValue={props.price} fontWeight="bold">
+            <Editable
+              defaultValue={props.price}
+              fontWeight="bold"
+              onChange={(nextValue) => {
+                props.onUpdate({
+                  id: props.id,
+                  name: props.name,
+                  category: props.category,
+                  price: nextValue,
+                  quantity: props.quantity,
+                  productId: props.productId,
+                  optionCodeName: props.optionCodeName
+                })
+              }}
+            >
               <EditablePreview />
               <EditableInput />
             </Editable>
@@ -63,7 +91,21 @@ function ProductCard(props) {
           divider={<StackDivider borderColor="gray.200" />}
         >
           <Tooltip label="제품 수량" aria-label="A tooltip">
-            <Editable defaultValue={props.quantity} fontWeight="bold">
+            <Editable
+              defaultValue={props.quantity}
+              fontWeight="bold"
+              onChange={(nextValue) => {
+                props.onUpdate({
+                  id: props.id,
+                  name: props.name,
+                  category: props.category,
+                  price: props.price,
+                  quantity: nextValue,
+                  productId: props.productId,
+                  optionCodeName: props.optionCodeName
+                })
+              }}
+            >
               <EditablePreview />
               <EditableInput />
             </Editable>
@@ -78,9 +120,23 @@ function ProductCard(props) {
             aria-label="A tooltip"
           >
             {props.isDisableProductIdAndOptionCodeName === true ? (
-              <Text>비활성</Text>
+              <Text fontWeight="bold">비활성</Text>
             ) : (
-              <Editable defaultValue={props.productId} fontWeight="bold">
+              <Editable
+                defaultValue={props.productId}
+                fontWeight="bold"
+                onChange={(nextValue) => {
+                  props.onUpdate({
+                    id: props.id,
+                    name: props.name,
+                    category: props.category,
+                    price: props.price,
+                    quantity: props.quantity,
+                    productId: nextValue,
+                    optionCodeName: props.optionCodeName
+                  })
+                }}
+              >
                 <EditablePreview />
                 <EditableInput />
               </Editable>
@@ -96,9 +152,23 @@ function ProductCard(props) {
             aria-label="A tooltip"
           >
             {props.isDisableProductIdAndOptionCodeName === true ? (
-              <Text>비활성</Text>
+              <Text fontWeight="bold">비활성</Text>
             ) : (
-              <Editable defaultValue={props.optionCodeName} fontWeight="bold">
+              <Editable
+                defaultValue={props.optionCodeName}
+                fontWeight="bold"
+                onChange={(nextValue) => {
+                  props.onUpdate({
+                    id: props.id,
+                    name: props.name,
+                    category: props.category,
+                    price: props.price,
+                    quantity: props.quantity,
+                    productId: props.productId,
+                    optionCodeName: nextValue
+                  })
+                }}
+              >
                 <EditablePreview />
                 <EditableInput />
               </Editable>
