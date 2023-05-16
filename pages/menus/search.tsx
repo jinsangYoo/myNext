@@ -60,7 +60,7 @@ const Search: FC = () => {
       duration: 3000,
       isClosable: true
     })
-  }, [url])
+  }, [url, keyword])
 
   return (
     <>
