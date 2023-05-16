@@ -33,10 +33,15 @@ import {
   ACEGender,
   ACEMaritalStatus
 } from '@jinsang/slimer-react'
-import { gcodeSelector, sendCommonWithPromise } from '../utils'
+import { useACSDKUtil } from '@/hooks/acsdk-util-hooks'
 import { FRONT_PART_VERSION } from '@/version'
+import { IconButton } from '@chakra-ui/react'
+import { RepeatIcon } from '@chakra-ui/icons'
 
 export default function Home() {
+  const { enable, details } = useACSDKUtil()
+
+  console.log(`enable: ${enable}, details: ${details}`)
   const [gcode, setGcode] = useState(`>>-<<`)
   const [version, setVersion] = useState(`>>-<<`)
   const [isEnable, setIsEnable] = useState(`false`)
@@ -45,16 +50,45 @@ export default function Home() {
   useEffect(() => {
     const msg = 'index.tsx 초기화면'
     const params = ACParams.init(ACParams.TYPE.EVENT, msg)
-    sendCommonWithPromise(msg, params)
+    ACS.send(params)
+      .then((response) => {
+        console.log(`Home::${msg}::in then!!`)
+        if (response) {
+          console.log('Home::response: ' + JSON.stringify(response, null, 2))
+        } else {
+          console.log('Home::response is undefined.')
+        }
+
+        // setIsEnable(ACS.isEnableSDK() ? 'true' : 'false')
+        // setSdkDetails(JSON.stringify(ACS.getSdkDetails(), null, 2))
+      })
+      .catch((err) => {
+        console.log(`Home::${msg}::in reject!!`)
+        if (err) {
+          console.log('Home::err: ' + JSON.stringify(err, null, 2))
+        } else {
+          console.log('Home::err is undefined.')
+        }
+      })
 
     setGcode(ACS.getKey())
     setVersion(ACS.getSdkVersion())
-    setIsEnable(ACS.isEnableSDK() ? 'true' : 'false')
+    setIsEnable(enable ? 'true' : 'false')
+    setSdkDetails(JSON.stringify(details, null, 2))
     setDomain(ACS.getPackageNameOrBundleID() ?? '-')
-    setSdkDetails(JSON.stringify(ACS.getSdkDetails(), null, 2))
   }, [])
 
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const refreshSdkDetails = () => {
+    console.log('in refreshSdkDetails')
+    console.log(`Home::ACS.isEnableSDK(): ${ACS.isEnableSDK()}`)
+    console.log(
+      'Home::ACS.getDetail(): ' + JSON.stringify(ACS.getSdkDetails(), null, 2)
+    )
+    setIsEnable(ACS.isEnableSDK() ? 'true' : 'false')
+    setSdkDetails(JSON.stringify(ACS.getSdkDetails(), null, 2))
+    setDomain(ACS.getPackageNameOrBundleID() ?? '-')
+  }
 
   return (
     <Box>
@@ -91,11 +125,17 @@ export default function Home() {
             <Text fontSize="sm">AC SDK 전송 도메인: {domain}</Text>
           </Box>
 
-          <Box display="flex" alignItems="baseline">
+          <Box display="flex" alignItems="center">
             <Text fontSize="sm">AC SDK 현황:</Text>
             <Button colorScheme="teal" m={2} onClick={onOpen}>
               ACS.getSdkDetails()
             </Button>
+
+            <IconButton
+              aria-label="refresh SDK details"
+              icon={<RepeatIcon />}
+              onClick={refreshSdkDetails}
+            />
 
             <Modal
               blockScrollOnMount={false}
