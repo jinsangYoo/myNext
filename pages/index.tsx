@@ -82,7 +82,7 @@ export default function Home() {
         <Heading textAlign="center" marginTop="1">
           React SDK APIs
         </Heading>
-        <VStack borderWidth="1px" alignItems="flex-start" spacing={1} p={1}>
+        <VStack borderWidth="1px" alignItems="flex-start" spacing={1} p={2}>
           <List spacing={1}>
             <ListItem display="flex" alignItems="center">
               <ListIcon as={MdCheckCircle} color="green.500" />
