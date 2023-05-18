@@ -16,6 +16,26 @@ import {
 import { gcodeSelector } from '../utils'
 import StatusForSDKContext from '../components/context/StatusForSDKContext'
 
+import { GetServerSideProps } from 'next'
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const referer = context.req.headers['referer'] ?? 'empty'
+  console.log(
+    `_app::getServerSideProps::context.req.headers: ${JSON.stringify(
+      context.req.headers,
+      null,
+      2
+    )}`
+  )
+  console.log(`_app::getServerSideProps::referer: ${referer}`)
+
+  return {
+    props: {
+      referer
+    }
+  }
+}
+
 export default function App({ Component, pageProps }: AppProps) {
   const [enable, setEnableInSDK] = useState(false)
   const [details, setDetailInSDK] = useState({})

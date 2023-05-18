@@ -45,6 +45,26 @@ import {
 import { useContext } from 'react'
 import StatusForSDKContext from '@/components/context/StatusForSDKContext'
 
+import { GetServerSideProps } from 'next'
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const referer = context.req.headers['referer'] ?? 'empty'
+  console.log(
+    `Home::getServerSideProps::context.req.headers: ${JSON.stringify(
+      context.req.headers,
+      null,
+      2
+    )}`
+  )
+  console.log(`Home::getServerSideProps::referer: ${referer}`)
+
+  return {
+    props: {
+      referer
+    }
+  }
+}
+
 export default function Home() {
   const { enable, details } = useContext(StatusForSDKContext)
   const [domain, setDomain] = useState('-')
