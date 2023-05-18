@@ -88,8 +88,8 @@ export default function Home() {
 
           <Box display="flex" alignItems="baseline">
             <Text fontSize="sm">
-              설명: reactjs + nextjs 웹사이트 + AC react SDK 테스트를 위한
-              웹사이트
+              설명: reactjs + nextjs 기반 웹사이트에서 AC react SDK 테스트를
+              위한 웹사이트
             </Text>
           </Box>
 
