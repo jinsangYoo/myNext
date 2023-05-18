@@ -22,7 +22,10 @@ function TopBar() {
         </Box>
         <Spacer />
         <Box p="2" maxWidth="container.xl" margin="auto">
-          <Text>react, next.js and AC SDK</Text>
+          <Text>
+            reactjs + nextjs 기반 웹사이트에서 AC react SDK 테스트를 위한
+            웹사이트
+          </Text>
         </Box>
       </Flex>
     </Box>

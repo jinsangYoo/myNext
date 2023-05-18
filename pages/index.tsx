@@ -1,4 +1,4 @@
-import { Box, Code, Heading, Text } from '@chakra-ui/react'
+import { Box, Code, Heading, Icon, Text } from '@chakra-ui/react'
 import { ButtonGroup, Button } from '@chakra-ui/react'
 import {
   VStack,
@@ -34,8 +34,14 @@ import {
   ACEMaritalStatus
 } from '@jinsang/slimer-react'
 import { FRONT_PART_VERSION } from '@/version'
-import { IconButton } from '@chakra-ui/react'
-import { RepeatIcon } from '@chakra-ui/icons'
+import { MdCheckCircle } from 'react-icons/md'
+import {
+  List,
+  ListItem,
+  ListIcon,
+  OrderedList,
+  UnorderedList
+} from '@chakra-ui/react'
 import { useContext } from 'react'
 import StatusForSDKContext from '@/components/context/StatusForSDKContext'
 
@@ -76,70 +82,96 @@ export default function Home() {
         <Heading textAlign="center" marginTop="1">
           React SDK APIs
         </Heading>
-        <VStack borderWidth="1px" alignItems="flex-start" spacing={1} p={2}>
-          <Box display="flex" alignItems="baseline">
-            <Badge colorScheme="teal">only debug</Badge>
-            <Text fontSize="sm">: SDK 디버그 용도</Text>
-          </Box>
+        <VStack borderWidth="1px" alignItems="flex-start" spacing={1} p={1}>
+          <List spacing={1}>
+            <ListItem display="flex" alignItems="center">
+              <ListIcon as={MdCheckCircle} color="green.500" />
+              <Box display="flex" alignItems="baseline">
+                <Text fontSize="sm">웹사이트 버전: {FRONT_PART_VERSION}</Text>
+              </Box>
+            </ListItem>
+            <ListItem display="flex" alignItems="center">
+              <ListIcon as={MdCheckCircle} color="green.500" />
+              <Box display="flex" alignItems="baseline">
+                <Text fontSize="sm" fontWeight="bold">
+                  SPA 구조인탓에 브라우져 갱신(refresh, F5)를 할 경우 웹사이트가
+                  초기화됨
+                </Text>
+              </Box>
+            </ListItem>
+            <ListItem display="flex" alignItems="center">
+              <ListIcon as={MdCheckCircle} color="green.500" />
+              <Box display="flex" alignItems="baseline">
+                <Text fontSize="sm">GCODE: {ACS.getKey() ?? '-'}</Text>
+              </Box>
+            </ListItem>
 
-          <Box display="flex" alignItems="baseline">
-            <Text fontSize="sm">웹사이트 버전: {FRONT_PART_VERSION}</Text>
-          </Box>
+            <ListItem display="flex" alignItems="center">
+              <ListIcon as={MdCheckCircle} color="green.500" />
+              <Box display="flex" alignItems="baseline">
+                <Text fontSize="sm">
+                  AC SDK 버전: {ACS.getSdkVersion() ?? '-'}
+                </Text>
+              </Box>
+            </ListItem>
 
-          <Box display="flex" alignItems="baseline">
-            <Text fontSize="sm">
-              설명: reactjs + nextjs 기반 웹사이트에서 AC react SDK 테스트를
-              위한 웹사이트
-            </Text>
-          </Box>
+            <ListItem display="flex" alignItems="center">
+              <ListIcon as={MdCheckCircle} color="green.500" />
+              <Box display="flex" alignItems="baseline">
+                <Text fontSize="sm">
+                  AC SDK 활성화: {enable ? 'true' : 'false'}
+                </Text>
+              </Box>
+            </ListItem>
 
-          <Box display="flex" alignItems="baseline">
-            <Text fontSize="sm">GCODE: {ACS.getKey() ?? '-'}</Text>
-          </Box>
+            <ListItem display="flex" alignItems="center">
+              <ListIcon as={MdCheckCircle} color="green.500" />
+              <Box display="flex" alignItems="baseline">
+                <Text fontSize="sm">AC SDK 전송 도메인: {domain}</Text>
+              </Box>
+            </ListItem>
+            <ListItem display="flex" alignItems="center">
+              <ListIcon as={MdCheckCircle} color="green.500" />
+              <Box display="flex" alignItems="center">
+                <Text fontSize="sm">AC SDK 현황:</Text>
+                <Button colorScheme="teal" m={2} onClick={onOpen}>
+                  ACS.getSdkDetails()
+                </Button>
 
-          <Box display="flex" alignItems="baseline">
-            <Text fontSize="sm">AC SDK 버전: {ACS.getSdkVersion() ?? '-'}</Text>
-          </Box>
+                <Modal
+                  blockScrollOnMount={false}
+                  isOpen={isOpen}
+                  onClose={onClose}
+                  size="xl"
+                >
+                  <ModalOverlay />
+                  <ModalContent>
+                    <ModalHeader>SDK 상세정보</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                      <pre>{JSON.stringify(details, null, 2)}</pre>
+                    </ModalBody>
 
-          <Box display="flex" alignItems="baseline">
-            <Text fontSize="sm">
-              AC SDK 활성화: {enable ? 'true' : 'false'}
-            </Text>
-          </Box>
+                    <ModalFooter>
+                      <Button colorScheme="blue" mr={3} onClick={onClose}>
+                        Close
+                      </Button>
+                    </ModalFooter>
+                  </ModalContent>
+                </Modal>
+              </Box>
+            </ListItem>
 
-          <Box display="flex" alignItems="baseline">
-            <Text fontSize="sm">AC SDK 전송 도메인: {domain}</Text>
-          </Box>
-
-          <Box display="flex" alignItems="center">
-            <Text fontSize="sm">AC SDK 현황:</Text>
-            <Button colorScheme="teal" m={2} onClick={onOpen}>
-              ACS.getSdkDetails()
-            </Button>
-
-            <Modal
-              blockScrollOnMount={false}
-              isOpen={isOpen}
-              onClose={onClose}
-              size="xl"
-            >
-              <ModalOverlay />
-              <ModalContent>
-                <ModalHeader>SDK 상세정보</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody>
-                  <pre>{JSON.stringify(details, null, 2)}</pre>
-                </ModalBody>
-
-                <ModalFooter>
-                  <Button colorScheme="blue" mr={3} onClick={onClose}>
-                    Close
-                  </Button>
-                </ModalFooter>
-              </ModalContent>
-            </Modal>
-          </Box>
+            <ListItem display="flex" alignItems="center">
+              <ListIcon as={MdCheckCircle} color="green.500" />
+              <Box display="flex" alignItems="baseline">
+                <Badge colorScheme="teal">only debug</Badge>
+                <Text fontSize="sm">: SDK 디버그 용도</Text>
+              </Box>
+            </ListItem>
+          </List>
         </VStack>
+
         <Grid
           gridTemplateColumns={['1fr', 'repeat(2, 1fr)', 'repeat(4, 1fr)']}
           gridGap="4"
