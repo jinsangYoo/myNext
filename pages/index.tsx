@@ -118,9 +118,7 @@ export default function Home() {
             <ListItem display="flex" alignItems="center">
               <ListIcon as={MdCheckCircle} color="green.500" />
               <Box display="flex" alignItems="baseline">
-                <Text fontSize="sm">
-                  AC SDK 활성화: {enable ? 'true' : 'false'}
-                </Text>
+                <Text fontSize="sm">AC SDK 활성화: {enable.toString()}</Text>
               </Box>
             </ListItem>
 
