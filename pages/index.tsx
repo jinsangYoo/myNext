@@ -41,6 +41,7 @@ import StatusForSDKContext from '@/components/context/StatusForSDKContext'
 
 export default function Home() {
   const { enable, details } = useContext(StatusForSDKContext)
+  const [domain, setDomain] = useState('-')
   useEffect(() => {
     const msg = 'index.tsx 초기화면'
     const params = ACParams.init(ACParams.TYPE.EVENT, msg)
@@ -61,6 +62,8 @@ export default function Home() {
           console.log('Home::err is undefined.')
         }
       })
+
+    setDomain(ACS.getPackageNameOrBundleID() ?? '-')
   }, [])
 
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -105,9 +108,7 @@ export default function Home() {
           </Box>
 
           <Box display="flex" alignItems="baseline">
-            <Text fontSize="sm">
-              AC SDK 전송 도메인: {ACS.getPackageNameOrBundleID() ?? '-'}
-            </Text>
+            <Text fontSize="sm">AC SDK 전송 도메인: {domain}</Text>
           </Box>
 
           <Box display="flex" alignItems="center">
