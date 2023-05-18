@@ -98,7 +98,6 @@ export const menus: menusProps = {
       name: 'Referrer',
       path: 'referrer',
       isDebug: true,
-      description: 'debug 용도',
       subMenu: []
     },
     {
@@ -106,7 +105,6 @@ export const menus: menusProps = {
       name: 'Webview',
       path: 'webview',
       isDebug: true,
-      description: 'debug 용도',
       subMenu: []
     },
     {
@@ -114,7 +112,6 @@ export const menus: menusProps = {
       name: 'Legacy',
       path: 'legacy',
       isDebug: true,
-      description: 'debug 용도',
       subMenu: [
         { id: 'main', name: 'A 메인', path: 'main' },
         { id: 'cart', name: 'A 장바구니', path: 'cart' },

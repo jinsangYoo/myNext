@@ -33,20 +33,14 @@ import {
   ACEGender,
   ACEMaritalStatus
 } from '@jinsang/slimer-react'
-import { useACSDKUtil } from '@/hooks/acsdk-util-hooks'
 import { FRONT_PART_VERSION } from '@/version'
 import { IconButton } from '@chakra-ui/react'
 import { RepeatIcon } from '@chakra-ui/icons'
+import { useContext } from 'react'
+import StatusForSDKContext from '@/components/context/StatusForSDKContext'
 
 export default function Home() {
-  const { enable, details } = useACSDKUtil()
-
-  console.log(`enable: ${enable}, details: ${details}`)
-  const [gcode, setGcode] = useState(`>>-<<`)
-  const [version, setVersion] = useState(`>>-<<`)
-  const [isEnable, setIsEnable] = useState(`false`)
-  const [domain, setDomain] = useState(`>>-<<`)
-  const [sdkDetails, setSdkDetails] = useState(`>>-<<`)
+  const { enable, details } = useContext(StatusForSDKContext)
   useEffect(() => {
     const msg = 'index.tsx 초기화면'
     const params = ACParams.init(ACParams.TYPE.EVENT, msg)
@@ -58,9 +52,6 @@ export default function Home() {
         } else {
           console.log('Home::response is undefined.')
         }
-
-        // setIsEnable(ACS.isEnableSDK() ? 'true' : 'false')
-        // setSdkDetails(JSON.stringify(ACS.getSdkDetails(), null, 2))
       })
       .catch((err) => {
         console.log(`Home::${msg}::in reject!!`)
@@ -70,26 +61,9 @@ export default function Home() {
           console.log('Home::err is undefined.')
         }
       })
-
-    setGcode(ACS.getKey())
-    setVersion(ACS.getSdkVersion())
-    setIsEnable(enable ? 'true' : 'false')
-    setSdkDetails(JSON.stringify(details, null, 2))
-    setDomain(ACS.getPackageNameOrBundleID() ?? '-')
   }, [])
 
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const refreshSdkDetails = () => {
-    console.log('in refreshSdkDetails')
-    console.log(`Home::ACS.isEnableSDK(): ${ACS.isEnableSDK()}`)
-    console.log(
-      'Home::ACS.getDetail(): ' + JSON.stringify(ACS.getSdkDetails(), null, 2)
-    )
-    setIsEnable(ACS.isEnableSDK() ? 'true' : 'false')
-    setSdkDetails(JSON.stringify(ACS.getSdkDetails(), null, 2))
-    setDomain(ACS.getPackageNameOrBundleID() ?? '-')
-  }
-
   return (
     <Box>
       <Head>
@@ -110,19 +84,30 @@ export default function Home() {
           </Box>
 
           <Box display="flex" alignItems="baseline">
-            <Text fontSize="sm">GCODE: {gcode}</Text>
+            <Text fontSize="sm">
+              설명: reactjs + nextjs 웹사이트 + AC react SDK 테스트를 위한
+              웹사이트
+            </Text>
           </Box>
 
           <Box display="flex" alignItems="baseline">
-            <Text fontSize="sm">AC SDK 버전: {version}</Text>
+            <Text fontSize="sm">GCODE: {ACS.getKey() ?? '-'}</Text>
           </Box>
 
           <Box display="flex" alignItems="baseline">
-            <Text fontSize="sm">AC SDK 활성화: {isEnable}</Text>
+            <Text fontSize="sm">AC SDK 버전: {ACS.getSdkVersion() ?? '-'}</Text>
           </Box>
 
           <Box display="flex" alignItems="baseline">
-            <Text fontSize="sm">AC SDK 전송 도메인: {domain}</Text>
+            <Text fontSize="sm">
+              AC SDK 활성화: {enable ? 'true' : 'false'}
+            </Text>
+          </Box>
+
+          <Box display="flex" alignItems="baseline">
+            <Text fontSize="sm">
+              AC SDK 전송 도메인: {ACS.getPackageNameOrBundleID() ?? '-'}
+            </Text>
           </Box>
 
           <Box display="flex" alignItems="center">
@@ -130,12 +115,6 @@ export default function Home() {
             <Button colorScheme="teal" m={2} onClick={onOpen}>
               ACS.getSdkDetails()
             </Button>
-
-            <IconButton
-              aria-label="refresh SDK details"
-              icon={<RepeatIcon />}
-              onClick={refreshSdkDetails}
-            />
 
             <Modal
               blockScrollOnMount={false}
@@ -148,7 +127,7 @@ export default function Home() {
                 <ModalHeader>SDK 상세정보</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                  <pre>{sdkDetails}</pre>
+                  <pre>{JSON.stringify(details, null, 2)}</pre>
                 </ModalBody>
 
                 <ModalFooter>
@@ -162,8 +141,8 @@ export default function Home() {
         </VStack>
         <Grid
           gridTemplateColumns={['1fr', 'repeat(2, 1fr)', 'repeat(4, 1fr)']}
-          gridGap="5"
-          padding="5"
+          gridGap="4"
+          padding="4"
         >
           {menus.menus.map((menu) => (
             <GridItem key={menu.id}>
