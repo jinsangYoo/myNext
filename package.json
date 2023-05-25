@@ -15,7 +15,7 @@
     "@chakra-ui/react": "^2.6.0",
     "@emotion/react": "^11.10.8",
     "@emotion/styled": "^11.10.8",
-    "@jinsang/slimer-react": "^1.0.48",
+    "@jinsang/slimer-react": "^1.0.49",
     "@types/node": "18.16.3",
     "@types/react": "18.2.4",
     "@types/react-dom": "18.2.3",
