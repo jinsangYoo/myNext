@@ -1,124 +1,207 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import { Box, Code, Heading, Icon, Text } from '@chakra-ui/react'
+import { ButtonGroup, Button } from '@chakra-ui/react'
+import {
+  VStack,
+  Flex,
+  useColorModeValue,
+  Spacer,
+  StackDivider
+} from '@chakra-ui/react'
+import { Badge } from '@chakra-ui/react'
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure
+} from '@chakra-ui/react'
+import { Grid, GridItem } from '@chakra-ui/react'
+import Head from 'next/head'
+import { menus } from '../data/menus'
+import MenuCard from '../components/MenuCard'
 
-const inter = Inter({ subsets: ['latin'] })
+import React, { useEffect, useState } from 'react'
+import {
+  AceConfiguration,
+  ACParams,
+  ACS,
+  ACEResponseToCaller,
+  ACProduct,
+  ACEGender,
+  ACEMaritalStatus
+} from '@jinsang/slimer-react'
+import { FRONT_PART_VERSION } from '@/version'
+import { MdCheckCircle } from 'react-icons/md'
+import {
+  List,
+  ListItem,
+  ListIcon,
+  OrderedList,
+  UnorderedList
+} from '@chakra-ui/react'
+import { useContext } from 'react'
+import StatusForSDKContext from '@/components/context/StatusForSDKContext'
+
+import { GetServerSideProps } from 'next'
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const referer = context.req.headers['referer'] ?? 'empty'
+  console.log(
+    `Home::getServerSideProps::context.req.headers: ${JSON.stringify(
+      context.req.headers,
+      null,
+      2
+    )}`
+  )
+  console.log(`Home::getServerSideProps::referer: ${referer}`)
+
+  return {
+    props: {
+      referer
+    }
+  }
+}
 
 export default function Home() {
+  const { enable, details } = useContext(StatusForSDKContext)
+  const [domain, setDomain] = useState('-')
+  useEffect(() => {
+    const msg = 'index.tsx 초기화면'
+    const params = ACParams.init(ACParams.TYPE.EVENT, msg)
+    ACS.send(params)
+      .then((response) => {
+        console.log(`Home::${msg}::in then!!`)
+        if (response) {
+          console.log('Home::response: ' + JSON.stringify(response, null, 2))
+        } else {
+          console.log('Home::response is undefined.')
+        }
+      })
+      .catch((err) => {
+        console.log(`Home::${msg}::in reject!!`)
+        if (err) {
+          console.log('Home::err: ' + JSON.stringify(err, null, 2))
+        } else {
+          console.log('Home::err is undefined.')
+        }
+      })
+
+    setDomain(ACS.getPackageNameOrBundleID() ?? '-')
+  }, [])
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">pages/index.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <Box>
+      <Head>
+        <title>Welcome to myNext website.</title>
+      </Head>
+      <Box>
+        <Heading textAlign="center" marginTop="1">
+          React SDK APIs
+        </Heading>
+        <VStack borderWidth="1px" alignItems="flex-start" spacing={1} p={2}>
+          <List spacing={1}>
+            <ListItem display="flex" alignItems="center">
+              <ListIcon as={MdCheckCircle} color="green.500" />
+              <Box display="flex" alignItems="baseline">
+                <Text fontSize="sm">웹사이트 버전: {FRONT_PART_VERSION}</Text>
+              </Box>
+            </ListItem>
+            <ListItem display="flex" alignItems="center">
+              <ListIcon as={MdCheckCircle} color="green.500" />
+              <Box display="flex" alignItems="baseline">
+                <Text fontSize="sm" fontWeight="bold">
+                  SPA 구조인탓에 브라우져 갱신(refresh, F5)를 할 경우 웹사이트가
+                  초기화됨
+                </Text>
+              </Box>
+            </ListItem>
+            <ListItem display="flex" alignItems="center">
+              <ListIcon as={MdCheckCircle} color="green.500" />
+              <Box display="flex" alignItems="baseline">
+                <Text fontSize="sm">GCODE: {ACS.getKey() ?? '-'}</Text>
+              </Box>
+            </ListItem>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+            <ListItem display="flex" alignItems="center">
+              <ListIcon as={MdCheckCircle} color="green.500" />
+              <Box display="flex" alignItems="baseline">
+                <Text fontSize="sm">
+                  AC SDK 버전: {ACS.getSdkVersion() ?? '-'}
+                </Text>
+              </Box>
+            </ListItem>
 
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
+            <ListItem display="flex" alignItems="center">
+              <ListIcon as={MdCheckCircle} color="green.500" />
+              <Box display="flex" alignItems="baseline">
+                <Text fontSize="sm">AC SDK 활성화: {enable.toString()}</Text>
+              </Box>
+            </ListItem>
+
+            <ListItem display="flex" alignItems="center">
+              <ListIcon as={MdCheckCircle} color="green.500" />
+              <Box display="flex" alignItems="baseline">
+                <Text fontSize="sm">AC SDK 전송 도메인: {domain}</Text>
+              </Box>
+            </ListItem>
+            <ListItem display="flex" alignItems="center">
+              <ListIcon as={MdCheckCircle} color="green.500" />
+              <Box display="flex" alignItems="center">
+                <Text fontSize="sm">AC SDK 현황:</Text>
+                <Button colorScheme="teal" m={2} onClick={onOpen}>
+                  ACS.getSdkDetails()
+                </Button>
+
+                <Modal
+                  blockScrollOnMount={false}
+                  isOpen={isOpen}
+                  onClose={onClose}
+                  size="xl"
+                >
+                  <ModalOverlay />
+                  <ModalContent>
+                    <ModalHeader>SDK 상세정보</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                      <pre>{JSON.stringify(details, null, 2)}</pre>
+                    </ModalBody>
+
+                    <ModalFooter>
+                      <Button colorScheme="blue" mr={3} onClick={onClose}>
+                        Close
+                      </Button>
+                    </ModalFooter>
+                  </ModalContent>
+                </Modal>
+              </Box>
+            </ListItem>
+
+            <ListItem display="flex" alignItems="center">
+              <ListIcon as={MdCheckCircle} color="green.500" />
+              <Box display="flex" alignItems="baseline">
+                <Badge colorScheme="teal">only debug</Badge>
+                <Text fontSize="sm">: SDK 디버그 용도</Text>
+              </Box>
+            </ListItem>
+          </List>
+        </VStack>
+
+        <Grid
+          gridTemplateColumns={['1fr', 'repeat(2, 1fr)', 'repeat(4, 1fr)']}
+          gridGap="4"
+          padding="4"
         >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p
-            className={`${inter.className} m-0 max-w-[30ch] text-sm opacity-50`}
-          >
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p
-            className={`${inter.className} m-0 max-w-[30ch] text-sm opacity-50`}
-          >
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p
-            className={`${inter.className} m-0 max-w-[30ch] text-sm opacity-50`}
-          >
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p
-            className={`${inter.className} m-0 max-w-[30ch] text-sm opacity-50`}
-          >
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+          {menus.menus.map((menu) => (
+            <GridItem key={menu.id}>
+              <MenuCard {...menu} />
+            </GridItem>
+          ))}
+        </Grid>
+      </Box>
+    </Box>
   )
 }
